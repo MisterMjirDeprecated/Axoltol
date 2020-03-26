@@ -1,8 +1,6 @@
 #include "py_window.h"
 #include <structmember.h>
 
-#include <iostream>
-
 PyMemberDef PyWindow::members[] = {
   {NULL}
 };
@@ -27,7 +25,7 @@ PyMethodDef PyWindow::methods[] = {
 
 int PyWindow::__init__(PyWindowObj* self, PyObject* args, PyObject* kwds)
 {
-  static const char* kwlist[] = {"title", "x", "y", "w", "h"};
+  static const char* kwlist[] = {"title", "x", "y", "w", "h", NULL};
   const char* title = "Axoltol Window";
   int x = 0, y = 0, w = 480, h = 320;
 

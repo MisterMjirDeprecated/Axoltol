@@ -2,7 +2,7 @@
 #define AXOLTOL_PY_WINDOW
 
 #include <Python.h>
-#include "window.h"
+#include "sdl.h"
 
 typedef struct
 {
@@ -16,8 +16,6 @@ public:
   // Standard Functions
   static int __init__(PyWindowObj* self, PyObject* args, PyObject* kwds);
   static void __dealloc__(PyWindowObj* self);
-
-  // Custom Functions
 
   // Variables
   static PyMemberDef members[];

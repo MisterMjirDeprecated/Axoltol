@@ -9,3 +9,8 @@ Window::~Window()
 {
   SDL_DestroyWindow(window);
 }
+
+SDL_Window* Window::getSDL()
+{
+  return window;
+}

@@ -53,6 +53,9 @@ PyMODINIT_FUNC PyInit_axoltol(void)
   if (PyType_Ready(&PyWindow::type) < 0)
     return NULL;
 
+  if (PyType_Ready(&PyRenderer::type) < 0)
+    return NULL;
+
   module = PyModule_Create(&axoltolmodule);
   if (module == NULL)
     return NULL;
@@ -61,6 +64,14 @@ PyMODINIT_FUNC PyInit_axoltol(void)
   if (PyModule_AddObject(module, "Window", (PyObject*) &PyWindow::type) < 0)
   {
     Py_DECREF(&PyWindow::type);
+    Py_DECREF(module);
+    return NULL;
+  }
+
+  Py_INCREF(&PyRenderer::type);
+  if (PyModule_AddObject(module, "Renderer", (PyObject*) &PyRenderer::type) < 0)
+  {
+    Py_DECREF(&PyRenderer::type);
     Py_DECREF(module);
     return NULL;
   }
