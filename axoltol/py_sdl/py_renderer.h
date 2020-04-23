@@ -13,12 +13,13 @@ typedef struct
 class PyRenderer
 {
 public:
-  // Standard Function
+  // Standard Functions
   static int __init__(PyRendererObj* self, PyObject* args, PyObject* kwds);
   static void __dealloc__(PyRendererObj* self);
 
   // Custom Functions
   static PyObject* setDrawColor(PyRendererObj* self, PyObject* args);
+  static PyObject* fillRect(PyRendererObj* self, PyObject* args);
   static PyObject* clear(PyRendererObj* self, PyObject* args);
   static PyObject* present(PyRendererObj* self, PyObject* args);
 

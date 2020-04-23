@@ -29,7 +29,7 @@ int PyWindow::__init__(PyWindowObj* self, PyObject* args, PyObject* kwds)
   const char* title = "Axoltol Window";
   int x = 0, y = 0, w = 480, h = 320;
 
-  if (!PyArg_ParseTupleAndKeywords(args, kwds, "|siiii", const_cast<char**>(kwlist), &title, x, y, w, h))
+  if (!PyArg_ParseTupleAndKeywords(args, kwds, "|siiii", const_cast<char**>(kwlist), &title, &x, &y, &w, &h))
     return -1;
 
   self->window = new Window(title, x, y, w, h, 0);

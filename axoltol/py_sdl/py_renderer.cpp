@@ -1,6 +1,8 @@
 #include "py_renderer.h"
 #include "py_window.h"
+#include "py_rect.h"
 #include <structmember.h>
+#include <SDL2/SDL.h>
 
 
 PyMemberDef PyRenderer::members[] = {
@@ -23,6 +25,7 @@ PyTypeObject PyRenderer::type = {
 
 PyMethodDef PyRenderer::methods[] = {
   {"setDrawColor", (PyCFunction) PyRenderer::setDrawColor, METH_VARARGS, "Sets the draw color of the renderer"},
+  {"fillRect", (PyCFunction) PyRenderer::fillRect, METH_VARARGS, "Fills in a rect"},
   {"clear", (PyCFunction) PyRenderer::clear, METH_NOARGS, "Clears the screen"},
   {"present", (PyCFunction) PyRenderer::present, METH_NOARGS, "Presents the screen"},
   {NULL}
@@ -53,6 +56,40 @@ PyObject* PyRenderer::setDrawColor(PyRendererObj* self, PyObject* args)
     return NULL;
 
   return PyLong_FromLong(self->renderer->setDrawColor(r, g, b, a));
+}
+
+PyObject* PyRenderer::fillRect(PyRendererObj* self, PyObject* args)
+{
+  // This is major finessing, Python doesn't support overloads but doing it anyways
+  PyObject* obj;
+  if (PyArg_ParseTuple(args, "O", &obj))
+  {
+    // axoltol.Rect object
+    if (PyObject_IsInstance(obj, (PyObject*) &PyRect::type))
+    {
+      PyRectObj* pyRect = (PyRectObj*) obj;
+      SDL_Rect rect = PyRect::getSDL(pyRect);
+      return PyLong_FromLong(self->renderer->fillRect(&rect));
+    }
+    // Four integers
+    else if (PyLong_Check(obj))
+    {
+      int x, y, w, h;
+      if(!PyArg_ParseTuple(args, "iiii", &x, &y, &w, &h))
+        return NULL;
+
+      return PyLong_FromLong(self->renderer->fillRect(x, y, w, h));
+    }
+    else
+    {
+      PyErr_SetString(PyExc_TypeError, "axoltol.Renderer.fillRect() method requires an axoltol.Rect object or four integers.");
+      return NULL;
+    }
+  }
+  else
+  {
+    return NULL;
+  }
 }
 
 PyObject* PyRenderer::clear(PyRendererObj* self, PyObject* args)
