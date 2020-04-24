@@ -5,5 +5,6 @@
 #include "py_renderer.h"
 #include "py_rect.h"
 #include "py_event.h"
+#include "py_texture.h"
 
 #endif

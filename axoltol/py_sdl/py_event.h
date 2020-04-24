@@ -1,5 +1,5 @@
-#ifndef AXOLTOL_EVENTS
-#define AXOLTOL_EVENTS
+#ifndef AXOLTOL_PY_EVENT
+#define AXOLTOL_PY_EVENT
 
 #include <Python.h>
 #include <SDL2/SDL.h>

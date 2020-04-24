@@ -62,6 +62,9 @@ PyMODINIT_FUNC PyInit_axoltol(void)
   if (PyType_Ready(&PyEvent::type) < 0)
     return NULL;
 
+  if (PyType_Ready(&PyTexture::type) < 0)
+    return NULL;
+
   module = PyModule_Create(&axoltolmodule);
   if (module == NULL)
     return NULL;
@@ -94,6 +97,14 @@ PyMODINIT_FUNC PyInit_axoltol(void)
   if (PyModule_AddObject(module, "Event", (PyObject*) &PyEvent::type) < 0)
   {
     Py_DECREF(&PyEvent::type);
+    Py_DECREF(module);
+    return NULL;
+  }
+
+  Py_INCREF(&PyTexture::type);
+  if (PyModule_AddObject(module, "Texture", (PyObject*) &PyTexture::type) < 0)
+  {
+    Py_DECREF(&PyTexture::type);
     Py_DECREF(module);
     return NULL;
   }

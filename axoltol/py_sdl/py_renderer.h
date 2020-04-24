@@ -20,6 +20,7 @@ public:
   // Custom Functions
   static PyObject* setDrawColor(PyRendererObj* self, PyObject* args);
   static PyObject* fillRect(PyRendererObj* self, PyObject* args);
+  static PyObject* copy(PyRendererObj* self, PyObject* args);
   static PyObject* clear(PyRendererObj* self, PyObject* args);
   static PyObject* present(PyRendererObj* self, PyObject* args);
 

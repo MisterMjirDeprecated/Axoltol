@@ -1,7 +1,8 @@
 #ifndef AXOLTOL_SDL
 #define AXOLTOL_SDL
 
-#include "window.h"
 #include "renderer.h"
+#include "texture.h"
+#include "window.h"
 
 #endif
