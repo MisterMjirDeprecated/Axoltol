@@ -2,7 +2,7 @@
 #include <structmember.h>
 
 PyMemberDef PyRect::members[] = {
-  {(char*) "x", T_INT, offsetof(PyRectObj, x), 0, (char*)"X position"},
+  {(char*) "x", T_INT, offsetof(PyRectObj, x), 0, (char*) "X position"},
   {(char*) "y", T_INT, offsetof(PyRectObj, y), 0, (char*) "X position"},
   {(char*) "w", T_INT, offsetof(PyRectObj, w), 0, (char*) "Width"},
   {(char*) "h", T_INT, offsetof(PyRectObj, h), 0, (char*) "Height"},

@@ -24,7 +24,34 @@ static PyObject* Axoltol_PollEvent(PyObject* self, PyObject* args)
   if (!PyArg_ParseTuple(args, "O!", &PyEvent::type, &obj))
     return NULL;
 
-  SDL_PollEvent(&((PyEventObj*) obj)->event);
+  PyEventObj* pyEvent = (PyEventObj*) obj;
+  SDL_PollEvent(&pyEvent->event);
+  PyDict_Clear(pyEvent->data);
+  switch (pyEvent->event.type)
+  {
+    case SDL_QUIT:
+    {
+      PyDict_SetItemString(pyEvent->data, "type", PyLong_FromLong(pyEvent->event.type));
+      PyDict_SetItemString(pyEvent->data, "timestamp", PyLong_FromLong(pyEvent->event.key.timestamp));
+      break;
+    }
+    case SDL_KEYDOWN:
+    case SDL_KEYUP:
+    {
+      PyObject* keysym = PyDict_New();
+      PyDict_SetItemString(keysym, "scancode", PyLong_FromLong(pyEvent->event.key.keysym.scancode));
+      PyDict_SetItemString(keysym, "sym", PyLong_FromLong(pyEvent->event.key.keysym.sym));
+      PyDict_SetItemString(keysym, "mod", PyLong_FromLong(pyEvent->event.key.keysym.mod));
+
+      PyDict_SetItemString(pyEvent->data, "type", PyLong_FromLong(pyEvent->event.type));
+      PyDict_SetItemString(pyEvent->data, "timestamp", PyLong_FromLong(pyEvent->event.key.timestamp));
+      PyDict_SetItemString(pyEvent->data, "windowID", PyLong_FromLong(pyEvent->event.key.windowID));
+      PyDict_SetItemString(pyEvent->data, "state", PyLong_FromLong(pyEvent->event.key.state));
+      PyDict_SetItemString(pyEvent->data, "repeat", PyLong_FromLong(pyEvent->event.key.repeat));
+      PyDict_SetItemString(pyEvent->data, "keysym", keysym);
+      break;
+    }
+  }
 
   Py_RETURN_NONE;
 }
